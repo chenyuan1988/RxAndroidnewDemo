@@ -10,4 +10,8 @@ public class LogUtils {
     public static void e(String message) {
         Log.e("rxandroid", message);
     }
+
+    public static void e(String tag, String message) {
+        Log.e(tag, message);
+    }
 }

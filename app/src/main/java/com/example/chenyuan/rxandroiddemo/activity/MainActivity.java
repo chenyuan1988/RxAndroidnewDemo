@@ -3,6 +3,17 @@ package com.example.chenyuan.rxandroiddemo.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.chenyuan.rxandroiddemo.entity.AddressBean;
+import com.example.chenyuan.rxandroiddemo.http.HttpApi;
+import com.example.chenyuan.rxandroiddemo.service.MoveService;
+import com.example.chenyuan.rxandroiddemo.utils.LogUtils;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -13,23 +24,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void callMethod(){
-
-       /* call.enqueue(new Callback() {
+    public void callMethod() {
+        MoveService service = HttpApi.getInstanec().create(MoveService.class);
+        Call<List<AddressBean>> call = service.getAddressList(1993, "0");
+        call.enqueue(new Callback<List<AddressBean>>() {
             @Override
-            public void onFailure(Call call, IOException e) {
-
+            public void onResponse(Call<List<AddressBean>> call, Response<List<AddressBean>> response) {
+                if (response.isSuccessful()){
+                    List<AddressBean> list = response.body();
+                }
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        String toString = response.body().toString();
-                        LogUtils.e(toString);
-                    }
-
+            public void onFailure(Call<List<AddressBean>> call, Throwable t) {
+                LogUtils.e("请求失败!");
             }
         });
-*/
+
     }
+
 }
